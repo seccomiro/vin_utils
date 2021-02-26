@@ -34,7 +34,7 @@ RSpec.describe VinUtils::Validator do
       end
 
       context 'invalid check digit' do
-        it 'returns a valid check digit that is different from the input VIN' do
+        it 'returns a valid check digit that is different from the check digit of input VIN' do
           vins[:invalid_check_digit].each do |vin|
             correct_check_digit = VinUtils::Validator.new(vin[:vin]).calculate_check_digit
             expect(correct_check_digit).to eq(vin[:valid_check_digit])
@@ -99,6 +99,53 @@ RSpec.describe VinUtils::Validator do
         it 'returns false' do
           vins[:invalid_type].each do |vin|
             expect(VinUtils::Validator.new(vin).valid?).to be false
+          end
+        end
+      end
+    end
+  end
+
+  describe '#suggest_valid_vin' do
+    context 'with valid VINs' do
+      it 'returns the same VIN' do
+        vins[:valid].each do |vin|
+          expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq(vin)
+        end
+      end
+    end
+
+    context 'with invalid VINs' do
+      context 'invalid characters' do
+        it 'returns :invalid' do
+          vins[:invalid_characters].each do |vin|
+            expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq :invalid
+          end
+        end
+      end
+
+      context 'invalid check digit' do
+        it 'returns a valid VIN that is different from the input VIN' do
+          vins[:invalid_check_digit].each do |vin|
+            valid_vin = VinUtils::Validator.new(vin[:vin]).suggest_valid_vin
+            expect(VinUtils::Validator.new(valid_vin)).to be_valid
+            expect(valid_vin).not_to eq(vin[:vin])
+            expect(valid_vin).to eq(vin[:valid_vin])
+          end
+        end
+      end
+
+      context 'invalid size' do
+        it 'returns :invalid' do
+          vins[:invalid_size].each do |vin|
+            expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq :invalid
+          end
+        end
+      end
+
+      context 'invalid type' do
+        it 'returns :invalid' do
+          vins[:invalid_type].each do |vin|
+            expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq :invalid
           end
         end
       end

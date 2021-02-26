@@ -25,6 +25,15 @@ module VinUtils
       MAP[sum % 11]
     end
 
+    def suggest_valid_vin
+      return :invalid unless valid_input?
+      return @vin if valid?
+
+      new_vin = @vin.dup
+      new_vin[8] = calculate_check_digit
+      new_vin
+    end
+
     private
 
     def transliterate(char)
