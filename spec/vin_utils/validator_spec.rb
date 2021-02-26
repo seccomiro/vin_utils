@@ -4,7 +4,7 @@ RSpec.describe VinUtils::Validator do
   let(:vins) do
     {
       valid: %w[1XPTD40X6JD456115 2NKWL00X16M149834 1XKYDPPX4MJ442156],
-      invalid_characters: %w[INKDLUOX33R385016 INKDLUOX33R385016],
+      invalid_characters: %w[INKDLUOX33R385016 INKDLUOX33R385016 1XPTD4.X6JD456115],
       invalid_check_digit: [
         {vin: '1XPBDP9X1FD257820', valid_check_digit: '8', valid_vin: '1XPBDP9X8FD257820'},
         {vin: '3HSDJAPRSFN657165', valid_check_digit: '5', valid_vin: '3HSDJAPR5FN657165'},
