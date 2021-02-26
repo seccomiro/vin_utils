@@ -34,9 +34,11 @@ RSpec.describe VinUtils::Validator do
       end
 
       context 'invalid check digit' do
-        it 'returns a valid check digit' do
+        it 'returns a valid check digit that is different from the input VIN' do
           vins[:invalid_check_digit].each do |vin|
-            expect(VinUtils::Validator.new(vin[:vin]).calculate_check_digit).to eq(vin[:valid_check_digit])
+            correct_check_digit = VinUtils::Validator.new(vin[:vin]).calculate_check_digit
+            expect(correct_check_digit).to eq(vin[:valid_check_digit])
+            expect(correct_check_digit).not_to eq(vin[:valid_check_digit].chars[8])
           end
         end
       end
