@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/vin_utils/validator'
+
+if ARGV[0].nil?
+  puts 'You must provide a VIN'
+  return
+end
+
+vin = ARGV[0].to_s
+
+validator = VinUtils::Validator.new(vin)
+puts "Provided VIN: #{vin}"
+if validator.valid?
+  puts 'Check Digit: VALID'
+  puts 'This looks like a VALID VIN!'
+else
+  suggested_vin = validator.suggest_valid_vin
+  if suggested_vin == :invalid
+    puts 'You provided an invalid VIN'
+  else
+    puts 'Check Digit: INVALID'
+    puts "Suggested VIN: #{validator.suggest_valid_vin}"
+  end
+end
