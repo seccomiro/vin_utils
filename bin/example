@@ -10,7 +10,7 @@ end
 vin = ARGV[0].to_s
 
 validator = VinUtils::Validator.new(vin)
-puts "Provided VIN: #{vin}"
+puts "Provided VIN: #{validator.vin}"
 if validator.valid?
   puts 'Check Digit: VALID'
   puts 'This looks like a VALID VIN!'
