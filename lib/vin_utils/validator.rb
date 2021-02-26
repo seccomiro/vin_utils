@@ -8,7 +8,7 @@ module VinUtils
       @vin = vin
     end
 
-    def validate
+    def valid?
       return false unless valid_input?
 
       calculate_check_digit == @vin[8]

@@ -15,7 +15,7 @@ RSpec.describe VinUtils::Validator do
     }
   end
 
-  describe '.calculate_check_digit' do
+  describe '#calculate_check_digit' do
     context 'with valid VINs' do
       it 'returns the same check digit' do
         vins[:valid].each do |vin|
@@ -61,11 +61,11 @@ RSpec.describe VinUtils::Validator do
     end
   end
 
-  describe '.validate' do
+  describe '#valid?' do
     context 'with valid VINs' do
       it 'returns true' do
         vins[:valid].each do |vin|
-          expect(VinUtils::Validator.new(vin).validate).to be true
+          expect(VinUtils::Validator.new(vin).valid?).to be true
         end
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe VinUtils::Validator do
       context 'invalid characters' do
         it 'returns false' do
           vins[:invalid_characters].each do |vin|
-            expect(VinUtils::Validator.new(vin).validate).to be false
+            expect(VinUtils::Validator.new(vin).valid?).to be false
           end
         end
       end
@@ -82,7 +82,7 @@ RSpec.describe VinUtils::Validator do
       context 'invalid check digit' do
         it 'returns false' do
           vins[:invalid_check_digit].each do |vin|
-            expect(VinUtils::Validator.new(vin[:vin]).validate).to be false
+            expect(VinUtils::Validator.new(vin[:vin]).valid?).to be false
           end
         end
       end
@@ -90,7 +90,7 @@ RSpec.describe VinUtils::Validator do
       context 'invalid size' do
         it 'returns false' do
           vins[:invalid_size].each do |vin|
-            expect(VinUtils::Validator.new(vin).validate).to be false
+            expect(VinUtils::Validator.new(vin).valid?).to be false
           end
         end
       end
@@ -98,7 +98,7 @@ RSpec.describe VinUtils::Validator do
       context 'invalid type' do
         it 'returns false' do
           vins[:invalid_type].each do |vin|
-            expect(VinUtils::Validator.new(vin).validate).to be false
+            expect(VinUtils::Validator.new(vin).valid?).to be false
           end
         end
       end
