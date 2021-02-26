@@ -1,8 +1,6 @@
 # VinUtils
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/vin_utils`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A gem to check and suggest [VIN](https://en.wikipedia.org/wiki/Vehicle_identification_number) identifiers.
 
 ## Installation
 
@@ -22,18 +20,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can use this gem in your code to check the validity of a given VIN.
 
-## Development
+```ruby
+input_vin = '11111111111111111'
+validator = VinUtils::Validator.new(input_vin)
+validator.valid? # true
+validator.calculate_check_digit # "1"
+validator.suggest_valid_vin # "11111111111111111"
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+> Both `calculate_check_digit` and `suggest_valid_vin` will return `:invalid` incase of an invalid input (invalid characters, size or data type).
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## Example
 
-## Contributing
+There is an example console application that can be run by typing:
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/vin_utils.
+```bash
+bin/example <VIN>
+```
 
+And it will print to the console something like the example below:
+
+```bash
+Provided VIN: <VIN>
+Check Digit: VALID
+This looks like a VALID VIN!
+```
 
 ## License
 
