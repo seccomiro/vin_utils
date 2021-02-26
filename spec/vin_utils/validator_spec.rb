@@ -19,7 +19,7 @@ RSpec.describe VinUtils::Validator do
     context 'with valid VINs' do
       it 'returns the same check digit' do
         vins[:valid].each do |vin|
-          expect(VinUtils::Validator.new(vin).calculate_check_digit).to eq(vin.chars[8])
+          expect(VinUtils::Validator.new(vin).calculate_check_digit).to eq vin.chars[8]
         end
       end
     end
@@ -37,8 +37,8 @@ RSpec.describe VinUtils::Validator do
         it 'returns a valid check digit that is different from the check digit of input VIN' do
           vins[:invalid_check_digit].each do |vin|
             correct_check_digit = VinUtils::Validator.new(vin[:vin]).calculate_check_digit
-            expect(correct_check_digit).to eq(vin[:valid_check_digit])
-            expect(correct_check_digit).not_to eq(vin[:valid_check_digit].chars[8])
+            expect(correct_check_digit).to eq vin[:valid_check_digit]
+            expect(correct_check_digit).not_to eq vin[:valid_check_digit].chars[8]
           end
         end
       end
@@ -109,7 +109,7 @@ RSpec.describe VinUtils::Validator do
     context 'with valid VINs' do
       it 'returns the same VIN' do
         vins[:valid].each do |vin|
-          expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq(vin)
+          expect(VinUtils::Validator.new(vin).suggest_valid_vin).to eq vin
         end
       end
     end
@@ -128,8 +128,8 @@ RSpec.describe VinUtils::Validator do
           vins[:invalid_check_digit].each do |vin|
             valid_vin = VinUtils::Validator.new(vin[:vin]).suggest_valid_vin
             expect(VinUtils::Validator.new(valid_vin)).to be_valid
-            expect(valid_vin).not_to eq(vin[:vin])
-            expect(valid_vin).to eq(vin[:valid_vin])
+            expect(valid_vin).not_to eq vin[:vin]
+            expect(valid_vin).to eq vin[:valid_vin]
           end
         end
       end
