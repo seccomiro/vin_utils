@@ -35,7 +35,9 @@ module VinUtils
       return false unless @vin.instance_of?(String)
       return false if @vin.chars.size != 17
 
-      @vin.chars.all? {|char| DIGIT_BASE.include?(char) }
+      @vin.chars.all? do |char|
+        DIGIT_BASE.include?(char) && char != '.'
+      end
     end
   end
 end
